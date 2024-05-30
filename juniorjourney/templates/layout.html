@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Junior Journey{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/style.css"%}" />
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <link rel="icon" type="image/x-icon" href="{% static "icon/JJ-favicon.png" %}">
+  </head>
+  <body>
+    <nav>
+    &nbsp;<a href="/" title="Home">🏠</a> | <a href="/about" title="About">❔</a> | <a href="{% url "posts:list" %}" title="Posts">📰</a> | <a href="{% url "users:register" %}" title="User">👤</a> | <a href="/" title="Search">🔍</a>
+    </nav>
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>
