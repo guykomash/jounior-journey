@@ -32,7 +32,7 @@ main {
   margin: 1rem;
   border: 1px solid white;
   width: fit-content;
-  max-width: 60rem;
+  max-width: 700px;
 }
 .post-date {
   font-size: 1rem;
@@ -41,6 +41,7 @@ main {
 
 .post-body {
   font-size: 1.5rem;
+  text-align: left;
 }
 
 .post-title {
@@ -50,7 +51,9 @@ main {
 }
 
 .post-page {
-  max-width: 60rem;
+  width: fit-content;
+  max-width: 700px;
+  /* text-align: left; */
 }
 h1 {
   text-align: center;
@@ -68,6 +71,12 @@ a {
 
 a:hover {
   opacity: 0.85;
+}
+
+.nav-button {
+  text-decoration: none;
+  color: aliceblue;
+  /* font-size: 1.8rem; */
 }
 
 .form-with-validation {
@@ -110,4 +119,19 @@ a:hover {
 
 .errorlist li::marker {
   content: '🚨 ';
+}
+
+.logout {
+  display: inline-block;
+}
+.logout-button {
+  text-decoration: none;
+  font-size: 2.5rem;
+  background-color: rgb(0, 0, 0, 0);
+  border: none;
+}
+
+.logout-button:hover {
+  opacity: 0.85;
+  cursor: pointer;
 }

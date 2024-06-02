@@ -6,11 +6,11 @@
 
 
 {% block content %}
-<h1>Post Page</h1>
 <section>
+    <h1>Post Page</h1>
     <article class="post-page">
         <h2 class="post-title">{{post.title}}</h2>
-        <p class="post-date">{{post.date}}</p>
+        <p class="post-date">{{post.date}} by {{ post.author }}</p>
         <p class="post-body">{{post.body}}</p>
     </article>
 

@@ -11,7 +11,21 @@
   </head>
   <body>
     <nav>
-    &nbsp;<a href="/" title="Home">🏠</a> | <a href="/about" title="About">❔</a> | <a href="{% url "posts:list" %}" title="Posts">📰</a> | <a href="{% url "users:register" %}" title="User">👤</a> | <a href="/" title="Search">🔍</a>
+    &nbsp;<a class="nav-button" href="/" title="Home">🏠</a>&nbsp;
+    <a class="nav-button" href="/about/" title="About">❔</a>&nbsp;
+    {% if user.is_authenticated  %}
+    
+    <a class="nav-button" href="{% url "posts:list" %}" title="Posts">📰</a>&nbsp;
+    <a class="nav-button" href="{% url "posts:new-post" %}" title="New Post">📝</a>&nbsp;
+    <a class="nav-button" href="/" title="Search">🔍</a>&nbsp;
+    <form class="logout" action="{% url "users:logout" %}" method="post">
+      {% csrf_token %}
+      <button class="logout-button" title="User Logout">👋</button>
+    </form>
+    {% else %}
+    <a class="nav-button" href="{% url "users:login" %}" title="User Login">Login</a>&nbsp;
+    <a class="nav-button" href="{% url "users:register" %}" title="User Register">Register</a> 
+    {% endif %}
     </nav>
     <main>{% block content %}{% endblock %}</main>
   </body>
