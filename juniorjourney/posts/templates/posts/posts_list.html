@@ -7,7 +7,7 @@
 
 {% block content %}
 <h1>Posts</h1>
-<section>
+<section class="post-list-section">
     {% for post in posts  %}
     <article class="post-list">
         <h2 class="post-title">
@@ -16,7 +16,9 @@
         </a>
         </h2>
         <p class="post-date">{{post.date}} by {{ post.author }}</p>
-        <p class="post-body">{{post.body}}</p>
+        <p class="post-body">{{ post.body|slice:":100" }}{% if post.body|length > 100 %}....<a href="{% url 'posts:page' slug=post.slug %}">
+            &nbsp;&nbsp;<br>read more
+        </a>{% endif %}</p>
     </article>
     {% endfor %}
 
