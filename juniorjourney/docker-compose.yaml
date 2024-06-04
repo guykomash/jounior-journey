@@ -1,0 +1,37 @@
+services:
+  users_db:
+    image: mysql:8
+    container_name: users_db
+    ports:
+      - '33006:3306'
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: users
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - users
+
+  users_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: users_backend
+    command: >
+      sh -c "python manage.py wait_for_db
+      && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+    depends_on:
+      - users_db
+    networks:
+      - users
+
+networks:
+  users:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
