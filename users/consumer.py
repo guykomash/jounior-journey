@@ -2,7 +2,6 @@ import django
 import json
 import os
 from confluent_kafka import Consumer
-from dotenv import load_dotenv
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
@@ -10,22 +9,13 @@ django.setup()
 
 import core.listeners
 
-
-load_dotenv()
-
-KAFKA_SERVER = os.getenv('KAFKA_SERVER')
-KAFKA_USERNAME = os.getenv('KAFKA_USERNAME')
-KAFKA_PASSWORD = os.getenv('KAFKA_PASSWORD')
-
-
-
 consumer = Consumer({
-'bootstrap.servers':KAFKA_SERVER,
+'bootstrap.servers':'pkc-7rgxp.il-central-1.aws.confluent.cloud:9092',
 'security.protocol':'SASL_SSL',
 'sasl.mechanisms':'PLAIN',
-'sasl.username': KAFKA_USERNAME,
-'sasl.password':KAFKA_PASSWORD,
-'group.id':'notifications-group',
+'sasl.username':'F7JAPZ6WCHJLBZ44',
+'sasl.password':'C76nZ9QAIizl7pjLYwJ+mpmqe8ru0eLUT0CwDzBuuQEy28d7FT9M50N10Gzc6Jco',
+'group.id':'subscriptions-group',
 'auto.offset.reset':'earliest',
 
 # Best practice for higher availability in librdkafka clients prior to 1.7
@@ -34,7 +24,7 @@ consumer = Consumer({
 
 
 
-consumer.subscribe(['notifications_topic'])
+consumer.subscribe(['subscription_topic'])
 
 try:
     while True:

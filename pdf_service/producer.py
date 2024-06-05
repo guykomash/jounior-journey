@@ -22,8 +22,8 @@ producer = Producer({
 })
 
 
-def produce_msg(topic, key, value):
 
+def produce_msg(topic, key, value):
     producer.produce(topic=topic, key=key, value=value)
     print(f"Produced message to {topic}")
     producer.flush()

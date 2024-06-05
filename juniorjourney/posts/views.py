@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import forms
 import json
 from juniorjourney.producer import produce_msg
-from django.forms.models import model_to_dict
+
 # Create your views here.
 
 @login_required(login_url="/users/login/")

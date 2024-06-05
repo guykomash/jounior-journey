@@ -86,11 +86,10 @@ DATABASES = {
         'NAME': 'notifications',
         'USER': 'root',
         'PASSWORD': 'MYSQL1234',
-        'HOST': 'host.docker.internal',
+        'HOST': '127.0.0.1', # 127.0.0.1 # host.docker.internal
         'PORT': '3306'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

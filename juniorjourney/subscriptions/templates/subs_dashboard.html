@@ -1,0 +1,20 @@
+{% extends "layout.html" %} {% block title %}Subscriptions{% endblock %} 
+{% block content %}
+
+<h1>Subscriptions</h1>
+  {% comment %} <h2>My Subscriptions</h2>
+  <ul>
+{% for sub in subs  %}
+<li>{{sub.sub_name}}</li>
+{% endfor %}
+</ul>
+
+<h2>Who I subscribed to?</h2>
+<ul>
+  {% for pub in pubs  %}
+  <li>{{pub.pub_name}}</li>
+  {% endfor %}
+  </ul> {% endcomment %}
+
+
+{% endblock %}

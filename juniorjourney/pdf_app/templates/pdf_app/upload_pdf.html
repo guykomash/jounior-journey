@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}Upload PDF{% endblock %} 
+
+
+{% block content %}
+<section>
+    <h1>Pdf Compressor Tool</h1>
+    <article>
+
+        <form class="pdf-upload-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            <button type="submit">Compress Pdf!</button>
+        </form>
+
+    </article>
+</section>
+{% endblock %}
+
+

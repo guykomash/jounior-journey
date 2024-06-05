@@ -17,7 +17,10 @@
     
     <a class="nav-button" href="{% url "posts:list" %}" title="Posts">📰</a>&nbsp;
     <a class="nav-button" href="{% url "posts:new-post" %}" title="New Post">📝</a>&nbsp;
-    <a class="nav-button" href="/" title="Search">🔍</a>&nbsp;
+    <a class="nav-button" href="{% url "subscriptions:dashboard" %}" title="Search">🔍</a>&nbsp;
+    <a class="nav-button" href="{% url "pdf_app:upload_pdf" %}" title="Pdf Compressor">📃</a>&nbsp;
+
+
     <form class="logout" action="{% url "users:logout" %}" method="post">
       {% csrf_token %}
       <button class="logout-button" title="User Logout">👋</button>

@@ -3,5 +3,8 @@
 *.pot
 *.pyc
 __pycache__
-
 assets
+
+.env
+
+*.pdf

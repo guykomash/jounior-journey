@@ -1,19 +1,37 @@
-version: '3.9'
 services:
-  users_backend:
-    build: .
-    volumes:
-      - .:/app
-    ports:
-      - 8001:8000
-    depends_on:
-      - users_db
-
-  users_db:
+  subscriptions_db:
     image: mysql:8
+    container_name: subscriptions_db
+    ports:
+      - '33306:3306'
     restart: always
-    environment:
-      - MYSQL_DATABASE: users
-      - MYSQL_ROOT_PASSWORD: pass
     volumes:
-      - .dbdata:/var/lib/mysql
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: subscriptions
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - subscriptions
+
+  subscriptions_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subscriptions_backend
+    command: >
+      sh -c "python manage.py wait_for_db
+      && python consumer.py"
+    ports:
+      - '8001:8000'
+    depends_on:
+      - subscriptions_db
+    networks:
+      - subscriptions
+
+networks:
+  subscriptions:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local

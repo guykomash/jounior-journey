@@ -8,3 +8,6 @@ def homepage(request):
 def about(request):
     # return HttpResponse("This page is about Junior Journey!")
     return render(request, 'about.html')
+
+def pdf_compressor(request):
+    return render(request, 'pdf_compressor.html')

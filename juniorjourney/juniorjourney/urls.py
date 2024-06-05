@@ -28,7 +28,9 @@ urlpatterns = [
     path('', views.homepage),
     path('about/', views.about),
     path('posts/', include('posts.urls')),
-    path('users/', include('users.urls'))
+    path('users/', include('users.urls')),
+    path('subscriptions/', include('subscriptions.urls')),
+    path('pdf-compressor/',include('pdf_app.urls'))
 ]
 
 

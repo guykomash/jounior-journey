@@ -3,9 +3,15 @@
 
 
 {% block content %}
-<h1>Home</h1>
-<p>Check out my <a href="/about/">About</a> page.</p>
-<p>New User? <a href="{% url "users:register" %}">Register Here!</a></p>
+<h1>Junior Journey</h1>
+<article clas="home-article"> 
+<small><p>First time here? check the <a href="/about/">About</a> page.</p></small>
+<br>
+<br>
+<p>New User? <a href="{% url "users:register" %}">Register</a></p>
+<br>
+<p>Existing User? <a href="{% url "users:login" %}">Continue your journey!</p>
+</article>
 {% endblock %}
 
 
