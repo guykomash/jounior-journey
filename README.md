@@ -16,12 +16,12 @@ consists of:
 
 ### Architcture Overview
 Consider the following flow:
-- 1. User uploads PDF file to the Django app.
-  2. Django app produces the file to Kafka.
-  3. Flask app consumes the file from Kafka.
-  4. Flask app compress tha file using the ilovepdf.com API.
-  5. Flak app produces the compressed file to Kafka.
-  6. Django app consumes the compressed file.
-  7. Django app sends the comopressed file to the client.
+1. User uploads PDF file to the Django app.
+2. Django app produces the file to Kafka.
+3. Flask app consumes the file from Kafka.
+4. Flask app compress tha file using the ilovepdf.com API.
+5. Flak app produces the compressed file to Kafka.
+6. Django app consumes the compressed file.
+7. Django app sends the comopressed file to the client.
      
 ![Junior Journey Architecture](https://github.com/guykomash/junior-journey/assets/128089503/d749e54d-f9b1-45bd-92ac-9167c95d839d)
