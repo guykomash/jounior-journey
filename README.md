@@ -1,7 +1,7 @@
 # Junior Journey
 
 ### Overview
-A Microservices project using Djang, Flask, MySQL, Kafka, Ilovepdf.com API, Docker.
+A Microservices project using Django, Flask, MySQL, Kafka, Ilovepdf.com API, Docker.
 consists of:
 - **Django Main Service:**:
   Serves dynamic HTML content.
