@@ -14,7 +14,7 @@ consists of:
   Publishing compressed files returned from the API to Kafka.
 
 
-### Architcture Overview
+### Microservices Architcture
 Consider the following flow:
 1. User uploads PDF file to the Django app.
 2. Django app produces the file to Kafka.
