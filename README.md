@@ -3,12 +3,12 @@
 ### Overview
 A Microservices project using Django, Flask, MySQL, Kafka, Ilovepdf.com API, Docker.
 consists of:
-- **Django Main Service:**:
+- **Django Main Service:**
   Serves dynamic HTML content.
   Connected to a Kafka messaging system to publish PDF documents.
   Integrated with a MySQL database for persistent storage.
 
-- **Flask PDF Service:**:
+- **Flask PDF Service:**
   Consumes PDF files from Kafka.
   Compressing them by using ilovepdf.com API, working with authentication, following the API docs.
   Publishing compressed files returned from the API to Kafka.
