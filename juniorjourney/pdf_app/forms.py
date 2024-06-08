@@ -1,4 +1,7 @@
+from . import models
 from django import forms
 
-class PDFUploadForm(forms.Form):
-    pdf_file = forms.FileField()
+class PDFUploadForm(forms.ModelForm):
+    class Meta:
+        model = models.PDFFile
+        fields = ['file']
