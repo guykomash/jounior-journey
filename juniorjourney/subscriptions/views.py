@@ -1,13 +1,23 @@
 from django.shortcuts import render,redirect
 from .models import Subscription
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 # Create your views here.
 
 @login_required(login_url="/users/login/")
-def subs_dashboard(request):
-    print("Here")
+def subscriptions(request):
+    search_query = request.GET.get('users')
+    if search_query is not None:
+        users = User.objects.filter(username__icontains = search_query)
+    else: users = []
     my_subs = Subscription.objects.filter(pub_id = request.user.id)
     my_pubs = Subscription.objects.filter(sub_id = request.user.id)
     # return render(request, 'subscriptions/subs_dashboard.html')
-    return render(request, 'subs_dashboard.html', {'subs':my_subs, 'pubs':my_pubs})
+    return render(request, 'subs_dashboard.html', {'users': users,'subs':my_subs, 'pubs':my_pubs})
+
+# @login_required(login_url="/users/login/")
+# def subscriptions_search(request,users):
+#     print("Heren")
+#     print(f"users: {users}")
+#     return render(request, 'subs_dashboard.html')
