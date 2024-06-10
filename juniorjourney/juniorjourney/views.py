@@ -11,3 +11,6 @@ def about(request):
 
 def pdf_compressor(request):
     return render(request, 'pdf_compressor.html')
+
+def not_found(request):
+    return render(request, '404.html')

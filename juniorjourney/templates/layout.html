@@ -6,24 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Junior Journey{% endblock %}</title>
     <link rel="stylesheet" href="{% static "css/style.css"%}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/main.js' %}" defer></script>
     <link rel="icon" type="image/x-icon" href="{% static "icon/JJ-favicon.png" %}">
   </head>
   <body>
     <nav>
-    &nbsp;<a class="nav-button" href="/" title="Home">🏠</a>&nbsp;
-    <a class="nav-button" href="/about/" title="About">❔</a>&nbsp;
+    &nbsp;<a class="nav-button" href="/" title="Home"><nobr>Junior Journey</nobr></a>&nbsp;
+    <a class="nav-button" href="/about/" title="About"><nobr>About</nobr></a>&nbsp;
     {% if user.is_authenticated  %}
     
-    <a class="nav-button" href="{% url "posts:list" %}" title="Posts">📰</a>&nbsp;
-    <a class="nav-button" href="{% url "posts:new-post" %}" title="New Post">📝</a>&nbsp;
-    <a class="nav-button" href="{% url "subscriptions:subscriptions" %}" title="Search">🔍</a>&nbsp;
-    <a class="nav-button" href="{% url "pdf_app:upload_pdf" %}" title="Pdf Compressor">📃</a>&nbsp;
-    <div class="logout-div">
+    <a class="nav-button" href="{% url "posts:list" %}" title="Posts">Posts</a>&nbsp;
+    <a class="nav-button" href="{% url "subscriptions:subscriptions" %}" title="Find Users"><nobr>Find Users</nobr></a>&nbsp;
+    <a class="nav-button" href="{% url "pdf_app:upload_pdf" %}" title="Pdf Compressor"><nobr>Pdf Compressor</nobr></a>&nbsp;
+  <div class="logout-div">
+    <p class="nav-current-user-p"><nobr>Hi, <a class="nav-current-user-p" href="{% url "users:page" 1 %}"><strong>{{user.username}}</strong></a></nobr><p>&nbsp;&nbsp;
       <form class="logout" action="{% url "users:logout" %}" method="post">
         {% csrf_token %}
-      <button class="logout-button" title="User Logout">👋</button>
-    </form>
+      <button class="logout-button" title="User Logout">Logout</button>
+    </form> 
   </div>
     {% else %}
 <a class="nav-button" href="{% url "users:login" %}" title="User Login">Login</a>&nbsp;

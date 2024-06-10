@@ -4,6 +4,11 @@ from django.contrib.auth import login, logout
 import json
 import datetime
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
+from subscriptions.models import Subscription
 
 
 # Create your views here.
@@ -35,17 +40,18 @@ def logout_view(request):
         logout(request)
         return redirect("/")
 
+@login_required(login_url="/users/login/")
+def user_page_view(request,user_id):
 
+    # if no matching user is foud, redirect to 404.
+    user = get_object_or_404(User, id= user_id)
+    followers = Subscription.objects.filter(pub_id = user_id)
+    following = Subscription.objects.filter(sub_id = user_id)
 
-# def analytics_login(username):
-#     key = "subscriptions"
-#     value = json.dumps({
-#         "user_id": "1",
-#         "username": username,
-#         "login_time": timezone.now().isoformat(), 
+    
+    # user is found!
+    # username = user.username
+    # firstname = user.first_name
+    # lastname = user.last_name
 
-#     })
-#     producer.produce("notifications_topic", key=key, value=value)
-#     print(f"Produced message to notifications_topic: key = {key:12} value = {value:12}")
-#     # send any outstanding or buffered messages to the Kafka broker
-#     producer.flush()
+    return render(request, 'users/user_page.html',{'user':user})

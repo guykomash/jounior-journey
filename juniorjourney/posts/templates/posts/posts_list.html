@@ -7,6 +7,10 @@
 
 {% block content %}
 <h1>Posts</h1>
+<form action="{% url "posts:new-post" %}">
+    <input class="new-post-button" type="submit" value="Create New Post" />
+</form>
+{% comment %} <a class="new-post-link" href="{% url "posts:new-post" %}" title="New Post">Create new post</a>&nbsp; {% endcomment %}
 <section class="post-list-section">
     {% for post in posts  %}
     <article class="post-list">
@@ -16,8 +20,8 @@
         </a>
         </h2>
         <p class="post-date">{{post.date}} by {{ post.author }}</p>
-        <p class="post-body">{{ post.body|slice:":100" }}{% if post.body|length > 100 %}....<a href="{% url 'posts:page' slug=post.slug %}">
-            &nbsp;&nbsp;<br>read more
+        <p class="post-body">{{ post.body|slice:":70" }}{% if post.body|length > 70 %}....<a href="{% url 'posts:page' slug=post.slug %}">
+            &nbsp;&nbsp;read more
         </a>{% endif %}</p>
     </article>
     {% endfor %}

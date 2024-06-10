@@ -12,13 +12,39 @@
 
 <section>
   <ul>
-  {% for user in users  %}
-    <li>
-      <p>{{user.username}}</p>
+  {% for search_user in users  %}
+    <li class="user-search-li">
+      <p class="user-search-p">{{search_user.username}}</p>
+      {% comment %} <form method="POST" action="{% url 'subscriptions:sub' user.id%}">
+        {% csrf_token %}
+        {{ form }}
+        </form> {% endcomment %}
+        {% csrf_token %}
+        <p>{% csrf_token %}</p>
+        {{button}}
+      <button class="user-search-button" onclick="subscribe({{user.id}},{{search_user.id}})">Follow</button>
     </li>
   {% endfor %}
   </ul>
-  
+  <br>
+  <h2>Followers</h2><br>
+  <ul>
+    {% for sub in subs  %}
+      <li>
+        <p>{{sub.sub_name}}</p>
+      </li>
+    {% endfor %}
+    </ul>
+    <br>
+    <h2>Following</h2><br>
+    <ul>
+      {% for pub in pubs  %}
+        <li>
+          <p>{{pub.pub_name}}</p>
+        </li>
+      {% endfor %}
+      </ul>
+
   
   
   
