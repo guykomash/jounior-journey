@@ -12,23 +12,35 @@
   </head>
   <body>
     <nav>
-    &nbsp;<a class="nav-button" href="/" title="Home"><nobr>Junior Journey</nobr></a>&nbsp;
-    <a class="nav-button" href="/about/" title="About"><nobr>About</nobr></a>&nbsp;
+      <a href="/"><img src="{% static "icon/JJLogo.png" %}" alt="Logo" title="Junior Journey" style="width:80px;height:50px;" ></a>
+    &nbsp;<a class="nav-button{% if request.path == '/' %}-active{% endif %}" href="/" title="Home"><nobr>Junior Journey</nobr></a>&nbsp;
+    <a class="nav-button{% if request.path == '/about/' %}-active{% endif %}" href="/about/" title="About"><nobr>About</nobr></a>&nbsp;
     {% if user.is_authenticated  %}
+    {% url "applications:list" as applications_url %}
+    <a class="nav-button{% if request.path == applications_url %}-active{% endif %}" href="{% url "applications:list" %}" title="Find Users"><nobr>Applications</nobr></a>&nbsp;
     
-    <a class="nav-button" href="{% url "posts:list" %}" title="Posts">Posts</a>&nbsp;
-    <a class="nav-button" href="{% url "subscriptions:subscriptions" %}" title="Find Users"><nobr>Find Users</nobr></a>&nbsp;
-    <a class="nav-button" href="{% url "pdf_app:upload_pdf" %}" title="Pdf Compressor"><nobr>Pdf Compressor</nobr></a>&nbsp;
+    {% url 'posts:list' as posts_list_url %}
+    <a class="nav-button{% if request.path == posts_list_url %}-active{% endif %}" href="{% url "posts:list" %}" title="Posts">Posts</a>&nbsp;
+      
+    {% url "subscriptions:subscriptions" as subs_url %}
+    <a class="nav-button{% if request.path == subs_url %}-active{% endif %}" href="{% url "subscriptions:subscriptions" %}" title="Find Users"><nobr>Find Users</nobr></a>&nbsp;
+
+    {% url "pdf_app:upload_pdf" as pdf_url %}
+    <a class="nav-button{% if request.path == pdf_url %}-active{% endif %}" href="{% url "pdf_app:upload_pdf" %}" title="Pdf Compressor"><nobr>Pdf Compressor</nobr></a>&nbsp;
+
+
   <div class="logout-div">
-    <p class="nav-current-user-p"><nobr>Hi, <a class="nav-current-user-p" href="{% url "users:page" 1 %}"><strong>{{user.username}}</strong></a></nobr><p>&nbsp;&nbsp;
+    <p class="nav-current-user-p"><nobr>Hi, <a class="nav-current-user-p" href="{% url "users:profile" user.id %}"><strong>{{user.username}}</strong></a></nobr><p>&nbsp;&nbsp;
       <form class="logout" action="{% url "users:logout" %}" method="post">
         {% csrf_token %}
       <button class="logout-button" title="User Logout">Logout</button>
     </form> 
   </div>
     {% else %}
-<a class="nav-button" href="{% url "users:login" %}" title="User Login">Login</a>&nbsp;
-<a class="nav-button" href="{% url "users:register" %}" title="User Register">Register</a> 
+    {% url "users:login" as login_url %}
+<a class="nav-button{% if request.path == login_url %}-active{% endif %}" href="{% url "users:login" %}" title="User Login">Login</a>&nbsp;
+{% url "users:register" as register_url %}
+<a class="nav-button{% if request.path == register_url %}-active{% endif %}" href="{% url "users:register" %}" title="User Register">Register</a> 
 {% endif %}
 </nav>
 <main>{% block content %}{% endblock %}</main>

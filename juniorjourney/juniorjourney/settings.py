@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'users',
     'subscriptions',
     'rest_framework',
-    'pdf_app'
+    'pdf_app',
+    'applications'
     ]
 
 MIDDLEWARE = [

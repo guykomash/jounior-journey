@@ -22,48 +22,10 @@
         {% csrf_token %}
         <p>{% csrf_token %}</p>
         {{button}}
-      <button class="user-search-button" onclick="subscribe({{user.id}},{{search_user.id}})">Follow</button>
+      <button class="user-search-button" onclick="subscribe({{search_user.id}},{{user.id}})">Follow</button>
     </li>
   {% endfor %}
   </ul>
-  <br>
-  <h2>Followers</h2><br>
-  <ul>
-    {% for sub in subs  %}
-      <li>
-        <p>{{sub.sub_name}}</p>
-      </li>
-    {% endfor %}
-    </ul>
-    <br>
-    <h2>Following</h2><br>
-    <ul>
-      {% for pub in pubs  %}
-        <li>
-          <p>{{pub.pub_name}}</p>
-        </li>
-      {% endfor %}
-      </ul>
-
-  
-  
-  
-
-
 </section>
-  {% comment %} <h2>My Subscriptions</h2>
-  <ul>
-{% for sub in subs  %}
-<li>{{sub.sub_name}}</li>
-{% endfor %}
-</ul>
-
-<h2>Who I subscribed to?</h2>
-<ul>
-  {% for pub in pubs  %}
-  <li>{{pub.pub_name}}</li>
-  {% endfor %}
-  </ul> {% endcomment %}
-
 
 {% endblock %}

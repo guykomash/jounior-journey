@@ -29,6 +29,7 @@ urlpatterns = [
     path('about/', views.about),
     path('posts/', include('posts.urls')),
     path('users/', include('users.urls')),
+    path('applications/',include('applications.urls')),
     path('subscriptions/', include('subscriptions.urls')),
     path('pdf-compressor/',include('pdf_app.urls')),
     path('404/',views.not_found, name="not-found")

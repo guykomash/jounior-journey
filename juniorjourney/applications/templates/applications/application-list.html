@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}Applications{% endblock %} 
+
+
+{% block content %}
+<h1>Applications</h1>
+<form action="{% url "applications:new-application" %}">
+    <input class="new-post-button" type="submit" value="Add New Application" />
+</form>
+<section class="applications">
+    {% if applications %}
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Resume</th>
+        </tr>
+
+    {% for application in applications  %}
+    <tr>
+        <td>{{application.applied_date}}</td>
+        <td>{{application.company_name}}</td>
+        <td>{{application.role}}</td>
+        <td>{{application.status}}</td>
+        <td>{% if application.job_description|length < 15 %}
+            {{application.job_description}}
+            {% else %}
+            {{application.job_description|slice:":15"}}...
+            {% endif %}
+        </td>
+        <td>download</td>
+    </tr>
+{% endfor %}
+</table>
+    {% else %}
+    <p>no applications</p>
+    {% endif %}
+</section>
+{% endblock %}
+
+

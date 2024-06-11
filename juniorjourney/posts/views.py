@@ -26,21 +26,21 @@ def create_post(request):
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
-            new_post_notify(user_id=request.user.id, username=request.user.username,post_title=new_post.title, post_slug=new_post.slug,date=new_post.date)
+            # new_post_notify(user_id=request.user.id, username=request.user.username,post_title=new_post.title, post_slug=new_post.slug,date=new_post.date)
             return redirect('posts:list')
     else:
         form = forms.CreatePost()
     return render(request, 'posts/post_new.html', {'form': form})
 
-def new_post_notify(user_id, username,post_title,post_slug,date):
-    key = "new_post"
-    value = json.dumps({
-        "pub_id": user_id,
-        "pub_name": username,
-        "post" : {
-            "title": post_title,
-            "slug" : post_slug,
-        },
-        "date": date.isoformat()
-    })
-    produce_msg(topic="notifications_topic",key=key,value=value)
+# def new_post_notify(user_id, username,post_title,post_slug,date):
+#     key = "new_post"
+#     value = json.dumps({
+#         "pub_id": user_id,
+#         "pub_name": username,
+#         "post" : {
+#             "title": post_title,
+#             "slug" : post_slug,
+#         },
+#         "date": date.isoformat()
+#     })
+#     produce_msg(topic="notifications_topic",key=key,value=value)
