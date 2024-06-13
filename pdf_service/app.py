@@ -65,6 +65,10 @@ signal.signal(signal.SIGTERM, signal_handler)  # Handle termination signals
 def index():
     return "Kafka PDF Compression Service is running."
 
+@app.route('/about')
+def about():
+    return "A service that compresses pdfs"
+
 # @app.route('/delete/<server_filename>')
 # def delete_pdf():
 #     pass

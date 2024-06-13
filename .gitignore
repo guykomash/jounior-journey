@@ -5,6 +5,10 @@
 __pycache__
 assets
 
-.env
+.prettierignore
+.gitignore
 
+.env
 *.pdf
+notifications
+users
