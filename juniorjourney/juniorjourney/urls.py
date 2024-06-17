@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include, re_path
+from django.urls import path, include, re_path
 from . import views
 
 from django.conf import settings
@@ -23,17 +23,19 @@ from django.conf.urls.static import static
 from django.views.static import serve
 
 urlpatterns = [
-    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,
+            {'document_root': settings.STATIC_ROOT}),
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('about/', views.about),
     path('posts/', include('posts.urls')),
     path('users/', include('users.urls')),
-    path('applications/',include('applications.urls')),
+    path('applications/', include('applications.urls')),
     path('subscriptions/', include('subscriptions.urls')),
-    path('pdf-compressor/',include('pdf_app.urls')),
-    path('404/',views.not_found, name="not-found")
+    path('pdf-compressor/', include('pdf_app.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('404/', views.not_found, name="not-found")
 ]
 
 
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

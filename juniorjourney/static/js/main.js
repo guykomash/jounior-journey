@@ -11,9 +11,9 @@ function subscribe(pub_id, sub_id) {
     type: 'POST',
     url: '/subscriptions/subscribe/',
     data: {
-        'pub_id': pub_id,
-        'sub_id': sub_id,
-      'csrfmiddlewaretoken': getCookie('csrftoken'), // Fetch CSRF token
+      pub_id: pub_id,
+      sub_id: sub_id,
+      csrfmiddlewaretoken: getCookie('csrftoken'), // Fetch CSRF token
     },
     success: function (response) {
       if (response.status == 'success') {
@@ -28,8 +28,6 @@ function subscribe(pub_id, sub_id) {
   });
 }
 
-//{% url 'subscriptions:sub' user.id %}
-
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
@@ -43,4 +41,28 @@ function getCookie(name) {
     }
   }
   return cookieValue;
+}
+
+function deleteApplication(id) {
+  console.log(`delete application ${id}`);
+  $.ajax({
+    type: 'POST',
+    url: '/applications/delete/',
+    data: {
+      application_id: id,
+      csrfmiddlewaretoken: getCookie('csrftoken'), // Fetch CSRF token
+    },
+    success: function (response) {
+      if (response.status == 'success') {
+        alert(response.message);
+      } else {
+        alert('Error: ' + response.message);
+      }
+      location.reload();
+    },
+    error: function (xhr, errmsg, err) {
+      alert('AJAX request failed: ' + errmsg);
+      location.reload();
+    },
+  });
 }

@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'subscriptions',
     'rest_framework',
     'pdf_app',
-    'applications'
-    ]
+    'applications',
+    'ckeditor',
+    'ckeditor_uploader',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,14 +130,25 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'assets'
 
 STATICFILES_DIRS = [
-  BASE_DIR / 'static'
-    ]
+    BASE_DIR / 'static',
+    BASE_DIR / 'media'
+]
 
-# MEDIA_URL = 'media/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 # MEDIA_ROOT  = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 300,
+        'width': '100%',
+    },
+}

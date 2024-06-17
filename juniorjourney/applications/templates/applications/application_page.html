@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% comment %} {% load static %}
+<script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script> {% endcomment %}
+
+
+{% block title %}Application{% endblock %} 
+
+{% block content %}
+	<h1>Application Description</h1>
+	<h2> </h2>
+	{% if application  %}
+	<div class="application-description">
+	{{application.description|safe}}
+	</div>
+	{% endif %}
+
+{% endblock %}
+
+

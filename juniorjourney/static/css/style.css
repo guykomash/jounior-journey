@@ -80,7 +80,6 @@ main {
 .subscriptions-section {
   display: flex;
   flex-direction: column;
-  /* align-items: start; */
   width: 100%;
 }
 
@@ -269,4 +268,23 @@ button {
   border: 1px solid gainsboro;
   padding: 0.5rem;
   margin: 1rem;
+}
+
+.application-description {
+  all: initial;
+  background-color: white;
+  width: 50%;
+  list-style-position: inside;
+}
+
+.application-description ul li {
+  margin-left: 0.75em;
+  text-align: left;
+  margin-top: 2rem;
+  
+}
+
+.application-description p {
+  text-align:  left;
+  margin-left: 0.5rem;
 }
