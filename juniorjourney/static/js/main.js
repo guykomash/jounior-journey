@@ -45,6 +45,9 @@ function getCookie(name) {
 
 function deleteApplication(id) {
   console.log(`delete application ${id}`);
+  if (!confirm('are you sure?')) {
+    return;
+  }
   $.ajax({
     type: 'POST',
     url: '/applications/delete/',
@@ -54,7 +57,9 @@ function deleteApplication(id) {
     },
     success: function (response) {
       if (response.status == 'success') {
-        alert(response.message);
+        if (response.message) {
+          alert(response.message);
+        }
       } else {
         alert('Error: ' + response.message);
       }

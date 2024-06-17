@@ -55,7 +55,7 @@ def application_delete(request):
 
             # application = Application.objects.get(id = application_id)
             Application.objects.filter(id= application_id).delete()
-            return JsonResponse({"status":"success", "message": f"Deleted application id={application_id}"})
+            return JsonResponse({"status":"success", "message": None})
         
         except ObjectDoesNotExist as err:
             return JsonResponse({"status":"error", "message":err.message})

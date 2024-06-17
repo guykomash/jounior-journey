@@ -34,7 +34,7 @@
         <td><a href="{% url "applications:page" application.id %}" title="View">View Description</a></td>
         <td>download</td>
         <td><button onclick="deleteApplication({{application.id}})">Delete</button></td>
-        {% comment %} // <button class="user-search-button" onclick="subscribe({{search_user.id}},{{user.id}})">Follow</button> {% endcomment %}
+
     </tr>
 {% endfor %}
 </table>
