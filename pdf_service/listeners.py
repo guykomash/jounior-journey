@@ -3,12 +3,16 @@ import os
 import requests
 import base64
 import json
-
+from producer import produce_msg
 load_dotenv()
 
-ILOVE_PDF_PUBLIC_KEY = os.getenv('ILOVEPDF_PUBLIC_KEY')
-ILOVE_PDF_SECRET_KEY = os.getenv('ILOVEPDF_SECRET_KEY')
+from ilovpdf import pdf_compress_test
+from pdfco import uploadFile, compressPDF
 
+
+def read_file(file_path):
+     with open(file_path, 'rb') as f:
+          return f.read()
 
 def pdf_compress(msg_value):
     message = msg_value.decode('utf-8')
@@ -17,6 +21,7 @@ def pdf_compress(msg_value):
     file = message_json['file']
     file_name = file['name']
     file_size = file['size']
+    print(f"file_size = {file_size}")
     file_content_type = file['content_type']
     file_content = base64.b64decode(file['content'])
     
@@ -26,119 +31,49 @@ def pdf_compress(msg_value):
     print(f"content_type = {file_content_type}")
     print(f"content = {file_content[:10]}")
 
-    try:
-        prev_f = open('file.pdf','x')
-    except FileExistsError as err:
-        os.remove('file.pdf')
 
-    with open('file.pdf', 'w+b') as f:
+    file_path = os.path.join(os.getcwd(),'users_files',f'{user_id}','pdf',f'{file_name}')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    file_path_without_extension, _ = os.path.splitext(file_path)
+    destination_file_path = file_path_without_extension+"_compressed.pdf"
+
+    try:
+        prev_f = open(file_path,'x')
+    except FileExistsError as err:
+        os.remove(file_path)
+    except FileNotFoundError as err:
+            print(err)
+
+    with open(file_path, 'w+b') as f:
         f.write(file_content)
         f.flush()
         print(f"consumed pfd_compresion".upper())
+    
+
+
+    # # upload the file to pdfco
+    # uploadUrl = uploadFile(file_path)
+    # if not uploadUrl:
+    #     print("problem with uploading")
+    #     return
+
+    # if not compressPDF(uploaded_file_url=uploadUrl, destination_path= destination_file_path):
+    #     return
         
-    token = get_auth_token()
-    if not token: return
+    # Produce compresssed file to kafka!
+    message = {
+        'user_id' : user_id,
+        'file' : {
+            'name': file_name,
+            'size': os.path.getsize(destination_file_path),
+            'content_type': file_content_type,
+            'content': base64.b64encode(read_file(destination_file_path)).decode('utf-8')
+        }
+    }
 
-    headers = {"Authorization": "Bearer " + token}
-
-    server, task = get_server_and_taskid(headers=headers, tool="compress")
-    if not server or not task: return
-
-    with open('file.pdf', 'rb') as f:
-        server_filename = upload(headers=headers, server=server, task=task,file=f)
-        if not server_filename: return
-        print(server_filename)
-        return
-    
-# Get authentication token from ILovePdf
-def get_auth_token():
-    try:
-        auth_url = "https://api.ilovepdf.com/v1/auth"
-        data = {"public_key": ILOVE_PDF_PUBLIC_KEY}
-        r = requests.post(auth_url, data=data)
-        r.raise_for_status()
-        response_json = r.json()
-        token = response_json['token']
-        return token
-    except requests.exceptions.HTTPError as err:
-        print(err)
-        return False
-
-# Get server name and task id from ILovePdf
-def get_server_and_taskid(headers,tool):
-    try:
-        url = f"https://api.ilovepdf.com/v1/start/{tool}"
-        r = requests.get(url,headers=headers)
-        r.raise_for_status()
-        response_json = r.json()
-        server, task = response_json['server'], response_json['task']
-        return server, task
-    except requests.exceptions.HTTPError as err:
-        print(err)
-        return False,False
-    
-# Upload file to ILovePdf
-def upload(headers, server, task, file):
-    try:
-        upload_url = f"https://{server}/v1/upload"
-        file = {'file': file }
-        data = {'task': task}
-        r = requests.post(upload_url, headers=headers, files=file, data=data)
-        print(r.text)
-        r.raise_for_status()
-        response_json = r.json()
-        server_filename = response_json['server_filename']
-        return server_filename
-    except requests.exceptions.HTTPError as err:
-        print(err)
-        return False
-    
-# Tell ILovePdf to process an uploaded file
-def process(headers, server, task, tool, server_filename):
-    try:
-        process_url = f"https://{server}/v1/process"    
-        files =  [
-            {
-                "server_filename": server_filename,
-                "filename": "file"
-                }
-            ]
-                
-        data = {'task': task, "tool":tool, "files":files}
-        r = requests.post(process_url, headers=headers,files=files, json=data)
-        r.raise_for_status()
-        response_json = r.json()
-        return response_json
-    except requests.exceptions.HTTPError as err:
-        print(err)
-        print (r.text)
-        return False
-
-
-
-def pdf_compress_test():
-
-    user_id = 1
-    file_name = 'test.pdf'
-        
-    token = get_auth_token()
-    if not token: return
-
-    headers = {"Authorization": "Bearer " + token}
-
-    server, task = get_server_and_taskid(headers=headers, tool="compress")
-    if not server or not task: return
-
-    with open('file.pdf', 'rb') as f:
-        server_filename = upload(headers=headers, server=server, task=task,file=f)
-        if not server_filename: return
-        res = process(headers=headers, server=server,task=task, tool="compress",server_filename=server_filename)
-        if not res: return
-        print(res)
+    print(f"newsize = {message['file']['size']}")
+    # produce_msg('pdf_topic', 'pdf_compress_completed', json.dumps(message))
 
 
 if __name__ == "__main__":
     print("here")
-    pdf_compress_test()
-
-# def remove_upload(upload_url, headers=headers, data=data)

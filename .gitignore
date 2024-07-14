@@ -12,3 +12,5 @@ assets
 *.pdf
 notifications
 users
+
+.vscode
