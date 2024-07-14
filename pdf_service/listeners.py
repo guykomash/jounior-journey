@@ -72,7 +72,7 @@ def pdf_compress(msg_value):
     }
 
     print(f"newsize = {message['file']['size']}")
-    # produce_msg('pdf_topic', 'pdf_compress_completed', json.dumps(message))
+    produce_msg('pdf_compress_complete_topic', 'pdf_compress_complete', json.dumps(message))
 
 
 if __name__ == "__main__":
