@@ -1,7 +1,7 @@
 # Junior Journey
 
 ### Overview
-A Microservices project using Django, Flask, MySQL, Kafka, Ilovepdf.com API, Docker.
+A Microservices project using Django, Flask, MySQL, Kafka, AWS S3, PDF.co API, Docker.
 consists of:
 - **Django Main Service:**
   Serves dynamic HTML content.
@@ -16,12 +16,15 @@ consists of:
 
 ### Microservices Architcture
 Consider the following flow:
-1. User uploads PDF file to the Django app.
-2. Django app produces the file to Kafka.
-3. Flask app consumes the file from Kafka.
-4. Flask app compress tha file using the ilovepdf.com API.
-5. Flak app produces the compressed file to Kafka.
-6. Django app consumes the compressed file.
-7. Django app sends the comopressed file to the client.
+1. User uploads PDF file to the Main Service (Django app).
+2. The Main Service produces the file to Kafka.
+3. The PDF Service (Flask app) consumes the file from Kafka.
+4. The PDF Service sends upload the file to PDF.co API for compression.
+5. The PDF Service recieves the compressed file from the PDF.co API.
+6. The PDF Service stores the compressed file in an AWS S3 bucket.
+7. The PDF Service produces the bucket file url to Kafka.
+8. The Main Service consumes the AWS S3 url from Kafka.
+9. The Main Service display the url to the client.
      
-![Junior Journey Architecture](https://github.com/guykomash/junior-journey/assets/128089503/d749e54d-f9b1-45bd-92ac-9167c95d839d)
+![Junior Journey drawio](https://github.com/user-attachments/assets/f9c52677-b62a-479c-978b-f1ded8ef2848)
+
