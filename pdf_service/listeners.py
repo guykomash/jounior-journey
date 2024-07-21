@@ -4,12 +4,13 @@ import requests
 import base64
 import json
 from producer import produce_msg
+import boto3
+import uuid
 load_dotenv()
 
 from ilovpdf import pdf_compress_test
 from pdfco import uploadFile, compressPDF
-
-
+import s3
 def read_file(file_path):
      with open(file_path, 'rb') as f:
           return f.read()
@@ -36,7 +37,7 @@ def pdf_compress(msg_value):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     file_path_without_extension, _ = os.path.splitext(file_path)
     destination_file_path = file_path_without_extension+"_compressed.pdf"
-
+    destination_file_name = file_name + "_compressed.pdf"
     try:
         prev_f = open(file_path,'x')
     except FileExistsError as err:
@@ -51,28 +52,33 @@ def pdf_compress(msg_value):
     
 
 
-    # # upload the file to pdfco
-    # uploadUrl = uploadFile(file_path)
-    # if not uploadUrl:
-    #     print("problem with uploading")
-    #     return
+    # upload the file to pdfco
+    uploadUrl = uploadFile(file_path)
+    if not uploadUrl:
+        print("problem with uploading")
+        return
 
-    # if not compressPDF(uploaded_file_url=uploadUrl, destination_path= destination_file_path):
-    #     return
-        
+    if not compressPDF(uploaded_file_url=uploadUrl, destination_path= destination_file_path):
+        return
+
+    s3.create_presigned_url(user_id,destination_file_name)
+    
+    # upload compressed destination_file_path to AWS S3, return the link to kafka.
+
+
     # Produce compresssed file to kafka!
-    message = {
-        'user_id' : user_id,
-        'file' : {
-            'name': file_name,
-            'size': os.path.getsize(destination_file_path),
-            'content_type': file_content_type,
-            'content': base64.b64encode(read_file(destination_file_path)).decode('utf-8')
-        }
-    }
+    # message = {
+    #     'user_id' : user_id,
+    #     'file' : {
+    #         'name': file_name,
+    #         'size': os.path.getsize(destination_file_path),
+    #         'content_type': file_content_type,
+    #         'content': base64.b64encode(read_file(destination_file_path)).decode('utf-8')
+    #     }
+    # }
 
-    print(f"newsize = {message['file']['size']}")
-    produce_msg('pdf_compress_complete_topic', 'pdf_compress_complete', json.dumps(message))
+    # print(f"newsize = {message['file']['size']}")
+    # produce_msg('pdf_compress_complete_topic', 'pdf_compress_complete', json.dumps(message))
 
 
 if __name__ == "__main__":
