@@ -1,3 +1,4 @@
+import boto3.resources
 from dotenv import load_dotenv
 load_dotenv()
 import logging
@@ -36,24 +37,22 @@ s3 = boto3.client('s3',
         region_name=AWS_REGION
     )
 
-def create_presigned_url(user_id,filename):
+def create_presigned_post(user_id,filename,fields=None, conditions=None, expiration=3600):
     object_name = f"{user_id}-{filename}"
     print(f"object_name = {object_name}")
 
-    s3_client = boto3.client('s3')
     try:
-        presigned_url = s3_client.generate_presigned_url(
-            'put_object',
-            Params={'Bucket': BUCKET_NAME, 'Key': object_name},
-            ExpiresIn=3600
-        )
+        presigned_url = s3.generate_presigned_post(BUCKET_NAME,object_name, 
+                                                   Fields=fields, 
+                                                   Conditions=conditions, 
+                                                   ExpiresIn=expiration)                          
     except ClientError as e:
         print('s3Client error')
         print(e)
         return None
 
     # The response contains the presigned URL
-    print(presigned_url)
+    print(f"presigned_url= {presigned_url}")
     return presigned_url
 
 

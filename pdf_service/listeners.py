@@ -53,29 +53,39 @@ def pdf_compress(msg_value):
 
 
     # upload the file to pdfco
-    uploadUrl = uploadFile(file_path)
-    if not uploadUrl:
-        print("problem with uploading")
-        return
+    # uploadUrl = uploadFile(file_path)
+    # if not uploadUrl:
+    #     print("problem with uploading")
+    #     return
 
-    if not compressPDF(uploaded_file_url=uploadUrl, destination_path= destination_file_path):
-        return
+    # if not compressPDF(uploaded_file_url=uploadUrl, destination_path= destination_file_path):
+    #     return
 
-    s3.create_presigned_url(user_id,destination_file_name)
+    response = s3.create_presigned_post(user_id,destination_file_name)
+    if response is None:
+        exit(1)
     
+    upload_url = response['url']
+    upload_filename = response['fields']['key']
+
+    with open(destination_file_path, 'rb') as f:
+        files = {'file': (upload_filename, f)}
+        http_response = requests.post(response['url'], data=response['fields'], files=files)
+        print(http_response)
+        message = {
+            'user_id' : user_id,
+            'file' : {
+                'name': file_name,
+                'size': os.path.getsize(destination_file_path),
+                'content_type': file_content_type,
+                's3_url': response
+            }
+        }
+
     # upload compressed destination_file_path to AWS S3, return the link to kafka.
 
 
     # Produce compresssed file to kafka!
-    # message = {
-    #     'user_id' : user_id,
-    #     'file' : {
-    #         'name': file_name,
-    #         'size': os.path.getsize(destination_file_path),
-    #         'content_type': file_content_type,
-    #         'content': base64.b64encode(read_file(destination_file_path)).decode('utf-8')
-    #     }
-    # }
 
     # print(f"newsize = {message['file']['size']}")
     # produce_msg('pdf_compress_complete_topic', 'pdf_compress_complete', json.dumps(message))
