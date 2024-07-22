@@ -25,8 +25,8 @@ Consider the following flow:
 4. The PDF Service sends upload the file to PDF.co API for compression.
 5. The PDF Service recieves the compressed file from the PDF.co API.
 6. The PDF Service stores the compressed file in an AWS S3 bucket.
-7. The PDF Service produces the bucket file url to Kafka.
-8. The Main Service consumes the AWS S3 url from Kafka.
+7. The PDF Service saves the url to db.
+8. The Main Service consumes the AWS S3 url from PDF Service.
 9. The Main Service display the url to the User.
 
-![Junior Journey drawio](https://github.com/user-attachments/assets/f9c52677-b62a-479c-978b-f1ded8ef2848)
+![Junior Journey drawio](https://github.com/user-attachments/assets/3c888176-8946-456a-97cd-2a2d5c5c8eaf)
