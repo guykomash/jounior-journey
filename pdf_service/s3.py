@@ -38,11 +38,11 @@ s3 = boto3.client('s3',
     )
 
 def create_presigned_post(user_id,filename,fields=None, conditions=None, expiration=3600):
-    object_name = f"{user_id}-{filename}"
+    object_name = f"users/{user_id}/{uuid.uuid4().hex}.pdf"
     print(f"object_name = {object_name}")
 
     try:
-        presigned_url = s3.generate_presigned_post(BUCKET_NAME,object_name, 
+        response = s3.generate_presigned_post(BUCKET_NAME,object_name, 
                                                    Fields=fields, 
                                                    Conditions=conditions, 
                                                    ExpiresIn=expiration)                          
@@ -52,8 +52,9 @@ def create_presigned_post(user_id,filename,fields=None, conditions=None, expirat
         return None
 
     # The response contains the presigned URL
-    print(f"presigned_url= {presigned_url}")
-    return presigned_url
+    print(f"presigned_url= {response}")
+    print('....')
+    return response
 
 
     
