@@ -3,7 +3,6 @@
 ### Overview
 
 A Microservices project using Django, Flask, MySQL, Kafka, AWS S3, PDF.co API, Docker.
-A Microservices project using Django, Flask, MySQL, Kafka, AWS S3, PDF.co API, Docker.
 consists of:
 
 - **Django Main Service:**
@@ -28,6 +27,6 @@ Consider the following flow:
 6. The PDF Service stores the compressed file in an AWS S3 bucket.
 7. The PDF Service produces the bucket file url to Kafka.
 8. The Main Service consumes the AWS S3 url from Kafka.
-9. The Main Service display the url to the client.
+9. The Main Service display the url to the User.
 
 ![Junior Journey drawio](https://github.com/user-attachments/assets/f9c52677-b62a-479c-978b-f1ded8ef2848)
