@@ -12,14 +12,8 @@ BASE_URL = 'https://api.pdf.co/v1'
 
 PDF_FILE = '.\\file.pdf'
 
-# files = {'file': open(PDF_FILE, 'rb')}
-# headers = {'x-api-key': PDFCO_API_KEY}
 
-
-# https://api.pdf.co/v1/file/upload/get-presigned-url?name=test.pdf&encrypt=true
-
-
-def uploadFile(file_path):
+def upload_file(file_path):
     url = BASE_URL + '/file/upload/get-presigned-url'
     response = requests.get(url,headers={"x-api-key": PDFCO_API_KEY},params={'name':'file.pdf'})
     if (response.status_code == 200):
@@ -31,8 +25,6 @@ def uploadFile(file_path):
             # URL for future reference
             uploaded_file_url = json["url"]
             
-            # print(uploadedFileUrl)
-            # print(uploadUrl)
             # 2. UPLOAD FILE TO CLOUD.
             with open(file_path, 'rb') as file:
                 requests.put(upload_url, data=file,
@@ -47,7 +39,7 @@ def uploadFile(file_path):
 
     return None
 
-def compressPDF(uploaded_file_url , destination_path):
+def compress_pdf(uploaded_file_url , destination_path):
     url = BASE_URL + '/pdf/optimize'
     data = {
         'url':uploaded_file_url
@@ -77,14 +69,11 @@ def compressPDF(uploaded_file_url , destination_path):
         print(f"Request error: {response.status_code} {response.reason}")
 
 def test(file_name):
-    uploaded_file_url = uploadFile(file_name)
+    uploaded_file_url = upload_file(file_name)
     if not uploaded_file_url:
         print("error with uploadFile.")
         return None
-    compressPDF(uploaded_file_url=uploaded_file_url, destinationFile="testing.pdf")
-    #
-
-
+    compress_pdf(uploaded_file_url=uploaded_file_url, destinationFile="testing.pdf")
 
 if __name__ == "__main__":
     test(PDF_FILE)

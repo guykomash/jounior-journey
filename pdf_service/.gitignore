@@ -16,3 +16,5 @@ build/
 *.egg-info/
 
 users_files
+
+ilovepdf.py

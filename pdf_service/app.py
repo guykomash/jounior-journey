@@ -9,7 +9,7 @@ import sys
 import signal
 import os
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+
 
 KAFKA_SERVER = os.getenv('KAFKA_SERVER')
 KAFKA_USERNAME = os.getenv('KAFKA_USERNAME')
@@ -45,7 +45,7 @@ def kafka_consumer():
                 continue
             
             print(msg.key().decode("utf-8"))
-            # activate callback function
+            # invoke listener function by the message attribute.
             getattr(listeners, msg.key().decode('utf-8'))((msg.value()))
     except KeyboardInterrupt:
         pass
@@ -63,34 +63,19 @@ signal.signal(signal.SIGTERM, signal_handler)  # Handle termination signals
 
 mysql_username = os.getenv('MYSQL_USERNAME')
 mysql_password = os.getenv('MYSQL_PASSWORD')
-
-
-
-
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:{mysql_password}@localhost:3306/pdf_compressor'
 
 db = SQLAlchemy(app)
 
-class CompressedFile(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    date = db.Column(db.DateTime, default=datetime.now())
-    compressed_file_url = db.Column(db.String(255), nullable=False)
-
-
-
 
 @app.route('/')
 def index():
-    return "Kafka PDF Compression Service is running."
+    return "PDF Compression Service is running."
 
 @app.route('/about')
 def about():
     return "A service that compresses pdfs"
 
-# @app.route('/delete/<server_filename>')
-# def delete_pdf():
-#     pass
 
 if __name__ == "__main__":
     consumer_thread = threading.Thread(target=kafka_consumer)

@@ -7,22 +7,6 @@ import uuid
 import os
 from botocore.exceptions import ClientError
 
-# def singelton(class_):
-#     instances = {}
-#     def get_instance(*args, **kwargs):
-#         if class_ not in instances:
-#             instances[class_] = class_(*args, **kwargs)
-#         return instances[class_]
-#     return get_instance
-
-# @singelton
-# class S3_CLIENT():
-#     def __init__(self):
-#         self.bucket_name = os.getenv(os.getenv('S3_BUCKET_NAME'))
-#         self.s3_client = boto3.client('s3',
-#                 aws_access_key_id=os.getenv('S3_ACCESS_KEY'),
-#                 aws_secret_access_key=os.getenv('S3_SECRET_ACCESS_KEY'),
-#                 region_name=os.getenv("S3_REGION"))
 
 AWS_ACCESS_KEY = os.getenv('S3_ACCESS_KEY')
 AWS_SECRET_KEY = os.getenv('S3_SECRET_ACCESS_KEY')
