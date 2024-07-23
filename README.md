@@ -9,11 +9,14 @@ consists of:
   Serves dynamic HTML content.
   Connected to a Kafka messaging system to publish PDF documents.
   Integrated with a MySQL database for persistent storage.
+  Communicating with the Flask Service using gRPC.
 
 - **Flask PDF Service:**
   Consumes PDF files from Kafka.
-  Compressing them by using ilovepdf.com API, working with authentication, following the API docs.
-  Publishing compressed files returned from the API to Kafka.
+  Compressing them by using PDF.co API.
+  Storing the compressed file in AWS S3 bucket.
+  Storing the S3 file URL in MySQL db.
+  Communicating with the Main Service using gRPC.
 
 ### Microservices Architcture
 
@@ -26,7 +29,7 @@ Consider the following flow:
 5. The PDF Service recieves the compressed file from the PDF.co API.
 6. The PDF Service stores the compressed file in an AWS S3 bucket.
 7. The PDF Service saves the url to db.
-8. The Main Service consumes the AWS S3 url from PDF Service.
-9. The Main Service display the url to the User.
+8. The Main Service can now fetch the new URL using gRPC.
+9. The Main Service can display the url to the User.
 
 ![Junior Journey drawio](https://github.com/user-attachments/assets/3c888176-8946-456a-97cd-2a2d5c5c8eaf)

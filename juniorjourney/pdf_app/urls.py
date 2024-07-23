@@ -6,6 +6,6 @@ app_name = 'pdf_app'
 
 urlpatterns = [
 
-    path('', views.upload_pdf, name='upload_pdf'),
+    path('', views.pdf_home, name='pdf_home'),
     path('success/', views.success, name='success'),
 ]

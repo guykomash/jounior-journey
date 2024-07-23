@@ -1,0 +1,26 @@
+// command for generate gRPC code:
+// python -m grpc_tools.protoc -I./protos --python_out=. --pyi_out=. --grpc_python_out=. ./protos/pdfservice.proto
+
+syntax = "proto3";
+
+package pdfservice;
+
+// The PdfService service definition.
+service PdfService {
+
+    // Get all of the user's compressed pdfs - S3 URLs. 
+  rpc GetPdfsByUserID(PdfRequest) returns (PdfReply) {}
+}
+
+// The request message containing the user's name.
+message PdfRequest {
+  int32 user_id = 1;
+}
+
+message URL {
+  string url = 1;
+}
+// The response message containing the greetings
+message PdfReply {
+  repeated URL urls = 1;
+}

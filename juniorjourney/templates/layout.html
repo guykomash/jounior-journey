@@ -25,8 +25,8 @@
     {% url "subscriptions:subscriptions" as subs_url %}
     <a class="nav-button{% if request.path == subs_url %}-active{% endif %}" href="{% url "subscriptions:subscriptions" %}" title="Find Users"><nobr>Find Users</nobr></a>&nbsp;
 
-    {% url "pdf_app:upload_pdf" as pdf_url %}
-    <a class="nav-button{% if request.path == pdf_url %}-active{% endif %}" href="{% url "pdf_app:upload_pdf" %}" title="Pdf Compressor"><nobr>Pdf Compressor</nobr></a>&nbsp;
+    {% url "pdf_app:pdf_home" as pdf_url %}
+    <a class="nav-button{% if request.path == pdf_url %}-active{% endif %}" href="{% url "pdf_app:pdf_home" %}" title="Pdf Compressor"><nobr>Pdf Compressor</nobr></a>&nbsp;
 
 
   <div class="logout-div">
