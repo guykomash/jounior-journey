@@ -32,5 +32,5 @@ Consider the following flow:
 8. The Main Service can now fetch the new URL using gRPC.
 9. The Main Service can display the url to the User.
 
-![Untitled-2024-07-21-1434](https://github.com/user-attachments/assets/53eb03cc-b0bc-44cd-91e2-adfa9ff3686c)
+![Untitled-2024-07-21-1434](https://github.com/user-attachments/assets/f76f4d9d-81de-4cbf-abd8-a749ac855ed8)
 
