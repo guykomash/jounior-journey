@@ -32,4 +32,5 @@ Consider the following flow:
 8. The Main Service can now fetch the new URL using gRPC.
 9. The Main Service can display the url to the User.
 
-![Junior Journey drawio](https://github.com/user-attachments/assets/3c888176-8946-456a-97cd-2a2d5c5c8eaf)
+![Untitled-2024-07-21-1434](https://github.com/user-attachments/assets/f76f4d9d-81de-4cbf-abd8-a749ac855ed8)
+
