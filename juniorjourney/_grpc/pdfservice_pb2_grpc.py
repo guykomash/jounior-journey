@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import _grpc.pdfservice_pb2 as pdfservice__pb2
+import pdfservice_pb2 as pdfservice__pb2
 
 GRPC_GENERATED_VERSION = '1.65.1'
 GRPC_VERSION = grpc.__version__
