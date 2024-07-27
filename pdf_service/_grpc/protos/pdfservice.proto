@@ -17,10 +17,10 @@ message PdfRequest {
   int32 user_id = 1;
 }
 
-message URL {
+message URL { 
   string url = 1;
 }
-// The response message containing the greetings
+// The response message containing the greetings // URLList
 message PdfReply {
   repeated URL urls = 1;
 }
