@@ -12,10 +12,14 @@ class PdfRequest(_message.Message):
     def __init__(self, user_id: _Optional[int] = ...) -> None: ...
 
 class URL(_message.Message):
-    __slots__ = ("url",)
+    __slots__ = ("url", "name", "date")
     URL_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    DATE_FIELD_NUMBER: _ClassVar[int]
     url: str
-    def __init__(self, url: _Optional[str] = ...) -> None: ...
+    name: str
+    date: str
+    def __init__(self, url: _Optional[str] = ..., name: _Optional[str] = ..., date: _Optional[str] = ...) -> None: ...
 
 class PdfReply(_message.Message):
     __slots__ = ("urls",)

@@ -46,23 +46,24 @@ def pdf_home(request):
         
         # get all of the user's compressed urls. use gRPC for that!
         response = fetch_urls(user_id=request.user.id)
-
+        response_urls = []
         if response.status_code == 500:
-            print(f"Pdf service error={response.error}")
+            print(f"Pdf service error={response.content}")
         else:
             if response.status_code == 204:
                 print('Success: found 0 urls for this user')
             else:
-                # print(response.content)
+                print("heren ***************")
                 content_bytes = response.content
                 content_json = content_bytes.decode().replace("'", '"')
                 data = json.loads(content_json)
+                # print(data)
+                # response_user_id = data["user_id"]
+                response_files = json.loads(data["files"])
+                # print(response_files['files'])
+                # print(f"Success: found {len(response_files)} urls for user_id = {response_user_id}")
                 
-                response_user_id = data["user_id"]
-                response_urls = data["urls"]
-                print(f"Success: found {len(response_urls)} urls for user_id = {response_user_id}")
-
-        return render(request, 'pdf_app/pdf_home.html', {'form': form, 'urls':response_urls})
+        return render(request, 'pdf_app/pdf_home.html', {'form': form, 'files':response_files['files']}) #''',urls:response_urls'''
 
 def success(request):
     return render(request, 'pdf_app/success_pdf.html')

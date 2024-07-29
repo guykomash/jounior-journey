@@ -4,7 +4,7 @@ import os
 import requests
 import base64
 import json
-from producer import produce_msg
+# from producer import produce_msg
 import pdfco
 import s3
 from app import app, db 
@@ -98,7 +98,8 @@ def upload_to_s3_and_save_in_db(consumed_file, destination_file_name,destination
                 db.create_all()
                 compressed_file = CompressedFile(
                     user_id=consumed_file.user_id,
-                    compressed_file_url=s3_url
+                    name=consumed_file.name,
+                    url=s3_url
                 )
                 db.session.add(compressed_file)
                 db.session.commit()
@@ -113,8 +114,8 @@ def handler(msg_value):
     consumed_file.print_file_details()
     destination_file_name,destination_file_path,file_path = prepare_compressed_file(consumed_file)
 
-    # if pdfco_upload_and_compress(file_path, destination_file_path) is False:
-    #     exit(1)
+    if pdfco_upload_and_compress(file_path, destination_file_path) is False:
+        exit(1)
 
     upload_to_s3_and_save_in_db(consumed_file, destination_file_name=destination_file_name, destination_file_path=destination_file_path)
 

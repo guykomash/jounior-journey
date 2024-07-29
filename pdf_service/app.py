@@ -9,11 +9,13 @@ import sys
 import signal
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 KAFKA_SERVER = os.getenv('KAFKA_SERVER')
 KAFKA_USERNAME = os.getenv('KAFKA_USERNAME')
 KAFKA_PASSWORD = os.getenv('KAFKA_PASSWORD')
+
 
 app = Flask(__name__)
 
@@ -66,6 +68,7 @@ mysql_password = os.getenv('MYSQL_PASSWORD')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:{mysql_password}@localhost:3306/pdf_compressor'
 
 db = SQLAlchemy(app)
+migrate = Migrate(app,db)
 
 
 @app.route('/')
@@ -78,7 +81,12 @@ def about():
 
 
 if __name__ == "__main__":
+    from _grpc.pdfservice_server import serve
     consumer_thread = threading.Thread(target=kafka_consumer)
     consumer_thread.daemon = True  # Set as daemon
+    grpc_thread = threading.Thread(target=serve)
+    grpc_thread.daemon = True
+
+    grpc_thread.start()
     consumer_thread.start()
     app.run(host='0.0.0.0', port=5000)

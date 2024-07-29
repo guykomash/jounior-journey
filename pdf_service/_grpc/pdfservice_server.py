@@ -1,16 +1,14 @@
 """Flask Pdf Service is the server."""
 import os
 import sys
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-# print(sys.path[-1])
-
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
 from concurrent import futures
 import logging
 import grpc
 import pdfservice_pb2
 import pdfservice_pb2_grpc
-
-import models
+from app import app, db
+from models import CompressedFile
 
 
 
@@ -19,12 +17,16 @@ class PdfService(pdfservice_pb2_grpc.PdfServiceServicer):
         print(f"Flask received a pdf request from user_id={request.user_id}")
 
         user_id = request.user_id
-        urls = CompressedFile.query.filter_by(user_id=user_id).all()
-        response = pdfservice_pb2.PdfReply()
-        for url in urls:
-            proto_url = pdfservice_pb2.URL(url=url.url)
-            response.urls.append(proto_url)
-
+        with app.app_context():
+            try:
+                urls = CompressedFile.query.filter_by(user_id=user_id).all()
+                response = pdfservice_pb2.PdfReply()
+                for url in urls:
+                    proto_url = pdfservice_pb2.URL(url=url.url, name=url.name, date=url.date.strftime('%Y-%m-%d %H:%M:%S'))
+                    response.urls.append(proto_url)
+            except Exception as err:
+                print(err)
+                return
         return response
 
 def serve():
@@ -38,5 +40,5 @@ def serve():
 
 
 if __name__ == "__main__":
-    logging.basicConfig()
+    # logging.basicConfig()
     serve()

@@ -19,6 +19,8 @@ message PdfRequest {
 
 message URL {
   string url = 1;
+  string name = 2;
+  string date = 3;
 }
 // The response message containing the greetings
 message PdfReply {
