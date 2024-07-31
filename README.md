@@ -1,22 +1,16 @@
 # Junior Journey
 
 ### Overview
+A microservices social network app designed for job seekers to manage and share their job search journey with their followers. It consists of Django and Flask Python services, communicating through Kafka and gRPC. 
+Also used: AWS S3 for scalable storage, PDF.co API for pdf compression, Docker.
 
-A Microservices project using Django, Flask, MySQL, Kafka, AWS S3, PDF.co API, Docker.
-consists of:
+### Services Overview:
 
 - **Django Main Service:**
-  Serves dynamic HTML content.
-  Connected to a Kafka messaging system to publish PDF documents.
-  Integrated with a MySQL database for persistent storage.
-  Communicating with the Flask Service using gRPC.
+  Serves dynamic HTML, connected to MySQL database, allowing users to upload PDF files and sends them to Kafka. Uses gRPC to fetch the URLs  of compressed files from the PDF service.
 
 - **Flask PDF Service:**
-  Consumes PDF files from Kafka.
-  Compressing them by using PDF.co API.
-  Storing the compressed file in AWS S3 bucket.
-  Storing the S3 file URL in MySQL db.
-  Communicating with the Main Service using gRPC.
+ Consumes PDF files from Kafka, compresses them using the PDF.co API, stores the compressed files in an AWS S3 bucket, and saves the S3 file URLs in a MySQL database.
 
 ### Microservices Architcture
 
