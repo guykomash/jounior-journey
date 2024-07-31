@@ -35,4 +35,5 @@ Consider the following flow:
 ![Untitled-2024-07-21-1434](https://github.com/user-attachments/assets/f76f4d9d-81de-4cbf-abd8-a749ac855ed8)
 
 ### Pdf Upload Page (Django)
-![Pdf Front](https://github.com/user-attachments/assets/67833412-7438-443b-b8f9-df579887a4ae)
+
+![PDFUPLOAD](https://github.com/user-attachments/assets/2dee1c16-1ab1-4bd7-828a-c3e4c7b32c6e)
