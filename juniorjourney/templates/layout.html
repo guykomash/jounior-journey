@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static "css/style.css"%}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="{% static 'js/chatbox.js' %}" defer></script>
     <link rel="icon" type="image/x-icon" href="{% static "icon/JJ-favicon.png" %}">
   </head>
   <body>
@@ -44,5 +45,19 @@
 {% endif %}
 </nav>
 <main>{% block content %}{% endblock %}</main>
+      <!-- Chat Box -->
+      <div id="chat-box">
+        <div id="chat-header" title="Open Chat">
+            Chat & Events 
+            {% comment %} <button id="chat-toggle-button"></button> {% endcomment %}
+        </div>
+        <div id="chat-content">
+            <div id="chat-messages">
+            </div>
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-button">Send</button>
+        </div> 
+    </div>
+
   </body>
 </html>
