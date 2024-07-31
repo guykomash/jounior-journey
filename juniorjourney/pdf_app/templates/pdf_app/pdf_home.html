@@ -13,39 +13,42 @@
         <form class="pdf-upload-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            
-            <button type="submit">Compress Pdf!</button>
+            <button type="submit" class="pdf-submit-button">Compress PDF 🙂</button>
         </form>
     </article>
 </section>
 <br><br>
 
 <section class="applications">
-    {% if files %}
-    <table>
-        <tr>
-            <th>Num</th>
-            <th>Name</th>
-            <th>Date</th>
-        </tr>
+    <div class="compressed-pdfs">
 
-    {% for file in files  %}
-
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td><a href={{file.url}} title="Download">{{file.name}}</a></td>
-        <td>{{ file.date }}</td>
-        
-
-        {% comment %} <td><a href="{% url "applications:page" application.id %}" title="View">View Description</a></td> {% endcomment %}
-        {% comment %} <td>download</td>
-        <td><button onclick="deleteApplication({{application.id}})">Delete</button></td> {% endcomment %}
-    </tr>
-{% endfor %}
-</table>
-    {% else %}
-    <p>no urls</p>
-    {% endif %}
+        <h2>Your Compressed PDFs</h2>
+        {% if files %}
+        <table>
+            <tr>
+                <th>Num</th>
+                <th>Name</th>
+                <th>Date</th>
+            </tr>
+            
+            {% for file in files  %}
+            
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href={{file.url}} title="Download">{{file.name}}</a></td>
+                <td>{{ file.date }}</td>
+                
+                
+                {% comment %} <td><a href="{% url "applications:page" application.id %}" title="View">View Description</a></td> {% endcomment %}
+                {% comment %} <td>download</td>
+                <td><button onclick="deleteApplication({{application.id}})">Delete</button></td> {% endcomment %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>no urls</p>
+        {% endif %}
+    </div>
 </section>
 {% endblock %}
 
